@@ -418,6 +418,53 @@
         box-shadow: none;
         padding: 0.5rem 0.5rem;
       }
+      .gallery {
+        display: block;
+        padding: 0;
+        margin: 0;
+      }
+      .accordion-item {
+        margin-bottom: 1rem;
+        border-radius: var(--radius);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        background: #fff;
+        overflow: hidden;
+      }
+      .accordion-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.2rem 0.5rem;
+        background: #fff;
+        border: none;
+        border-bottom: 1px solid var(--gray-300);
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+      .accordion-btn:active, .accordion-btn.open {
+        background: var(--bg-surface-hover);
+      }
+      .accordion-btn img {
+        max-width: 120px;
+        max-height: 48px;
+        margin: 0 auto;
+        display: block;
+      }
+      .accordion-panel {
+        background: var(--bg-surface);
+        padding: 0.5rem 0.5rem 1rem 0.5rem;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.12s, opacity 0.12s;
+      }
+      .accordion-panel.open {
+        max-height: 500px;
+        opacity: 1;
+        transition: max-height 0.12s, opacity 0.12s;
+      }
     }
     
     /*  ───────────────────────────

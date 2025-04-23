@@ -105,36 +105,102 @@ let isClosing    = false;  // prevent race on fast taps
 document.addEventListener("DOMContentLoaded", () => {
   const gallery = document.querySelector(".gallery");
 
-  /* build 4-logo rows */
-  for (let i = 0; i < images.length; i += 4) {
-    const logoRow = document.createElement("div");
-    logoRow.className = "logo-row";
-
-    for (let j = i; j < i + 4 && j < images.length; j++) {
-      const src  = images[j];
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    // MOBILE: Render as accordion
+    gallery.innerHTML = "";
+    images.forEach(src => {
       const base = src.split("/").pop().replace(/\.(webp|png|jpe?g|avif)$/i, "");
+      const item = document.createElement("div");
+      item.className = "accordion-item";
 
-      const tile = document.createElement("div");
-      tile.className  = "tile";
-      tile.dataset.base = base;
-
+      const btn = document.createElement("button");
+      btn.className = "accordion-btn";
+      btn.type = "button";
       const img = document.createElement("img");
       img.src = src;
       img.alt = base;
+      btn.appendChild(img);
 
-      tile.appendChild(img);
-      logoRow.appendChild(tile);
+      const panel = document.createElement("div");
+      panel.className = "accordion-panel";
 
-      /* click → open/close the video row under this logo row */
-      tile.addEventListener("click", () => handleClick(tile));
+      btn.addEventListener("click", () => {
+        // Close any open panel
+        document.querySelectorAll(".accordion-panel.open").forEach(p => {
+          if (p !== panel) {
+            p.classList.remove("open");
+            p.previousSibling.classList.remove("open");
+            p.innerHTML = "";
+          }
+        });
+        // Toggle this panel
+        if (panel.classList.contains("open")) {
+          panel.classList.remove("open");
+          btn.classList.remove("open");
+          panel.innerHTML = "";
+        } else {
+          panel.classList.add("open");
+          btn.classList.add("open");
+          // Build video list
+          panel.innerHTML = "";
+          const heading = document.createElement("h3");
+          heading.textContent = "Watch:";
+          panel.appendChild(heading);
+
+          const list = document.createElement("div");
+          list.className = "video-links";
+          (videoMap[base] || []).forEach(link => {
+            const wrap = document.createElement("div");
+            wrap.className = "video-container";
+            const iframe = document.createElement("iframe");
+            iframe.src = link.includes("player.vimeo.com")
+              ? link
+              : link.replace("vimeo.com/", "player.vimeo.com/video/");
+            iframe.allow = "autoplay; fullscreen; picture-in-picture";
+            wrap.appendChild(iframe);
+            wrap.addEventListener("click", () => openVideoPopup(link));
+            list.appendChild(wrap);
+          });
+          panel.appendChild(list);
+        }
+      });
+
+      item.appendChild(btn);
+      item.appendChild(panel);
+      gallery.appendChild(item);
+    });
+  } else {
+    /* build 4-logo rows */
+    for (let i = 0; i < images.length; i += 4) {
+      const logoRow = document.createElement("div");
+      logoRow.className = "logo-row";
+
+      for (let j = i; j < i + 4 && j < images.length; j++) {
+        const src  = images[j];
+        const base = src.split("/").pop().replace(/\.(webp|png|jpe?g|avif)$/i, "");
+
+        const tile = document.createElement("div");
+        tile.className  = "tile";
+        tile.dataset.base = base;
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = base;
+
+        tile.appendChild(img);
+        logoRow.appendChild(tile);
+
+        /* click → open/close the video row under this logo row */
+        tile.addEventListener("click", () => handleClick(tile));
+      }
+
+      /* each logoRow is followed by its own (initially empty) videoRow */
+      const videoRow = document.createElement("div");
+      videoRow.className = "video-row";
+
+      gallery.appendChild(logoRow);
+      gallery.appendChild(videoRow);
     }
-
-    /* each logoRow is followed by its own (initially empty) videoRow */
-    const videoRow = document.createElement("div");
-    videoRow.className = "video-row";
-
-    gallery.appendChild(logoRow);
-    gallery.appendChild(videoRow);
   }
 
   /* popup overlay for full-screen playback (unchanged) */
