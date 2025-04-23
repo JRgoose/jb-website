@@ -239,9 +239,9 @@
       opacity:0;
       padding:0 1.2rem;
       transition:
-        max-height .45s ease,
-        opacity    .35s ease .05s,
-        padding    .35s ease;
+        max-height .18s ease,
+        opacity    .15s ease .02s,
+        padding    .15s ease;
     }
     .video-row.open{
       max-height:800px;
@@ -319,24 +319,104 @@
         ⑧ MOBILE BREAKPOINT
         ─────────────────────────── */
     @media(max-width:768px){
-      .container{flex-direction:column;}
+      .container{flex-direction:column;min-width:0;width:100vw;padding:0;}
     
       .sidebar{
         position:relative;
+        width:100%;
         height:auto;
         flex-direction:row;
         align-items:center;
-        gap:1.25rem;
         justify-content:flex-start;
-        padding:1rem;
+        gap:1rem;
+        padding:0.75rem 0.5rem;
+        min-width:0;
+        text-align:left;
       }
     
-      .avatar{margin:0;}
-      .site-title{margin:0;}
+      .avatar{width:56px;height:56px;margin:0 0.5rem 0 0;}
+      .site-title{font-size:1.2rem;margin:0 0.5rem 0 0;}
     
-      .logo-row{
-        grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-        gap:1rem;
+      .roles-box, .nav-box {
+        padding:0.5rem 0;
+        margin-bottom:0;
+      }
+    
+      .sidebar-nav a {
+        font-size:1rem;
+        padding:0.5em 0.5em;
+      }
+    
+      .content{margin-left:0;padding:1rem 0.5rem;width:100vw;min-width:0;}
+    
+      .gallery{gap:1rem;}
+    
+      .logo-row{grid-template-columns:repeat(2,1fr);gap:1rem;}
+    
+      .tile{height:90px;font-size:0.95rem;}
+      .tile img{max-height:60px;}
+    }
+    
+    @media (max-width: 480px) {
+      .sidebar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.5rem 0.25rem;
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        margin: 0 0 0.5rem 0;
+      }
+      .site-title {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+      .content {
+        padding: 0.5rem 0.25rem;
+      }
+      .logo-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .tile {
+        height: 64px;
+        font-size: 0.9rem;
+      }
+      .tile img {
+        max-height: 40px;
+      }
+      .about-content {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.95rem;
+      }
+      .page-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+      .sidebar > * {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .logo-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .video-row {
+        margin: 0 !important;
+        width: 100% !important;
+        border-radius: 0 0 var(--radius) var(--radius);
+        box-shadow: none;
+        padding: 0.5rem 0.5rem;
       }
     }
     
