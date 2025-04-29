@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/6d2b5757-48b4-4496-973a-c50967566f63)
+![image](https://github.com/user-attachments/assets/a70430ad-4ea3-423a-bf9a-228a03994999)
+
+
 # 🖥️ jb-website
 
 The project was built to showcase my skills in HTML, CSS, and JavaScript and how to build an interactive webpage. This project demonstrates front-end skills using HTML, CSS, and JavaScript, designed for both desktop and mobile views.
